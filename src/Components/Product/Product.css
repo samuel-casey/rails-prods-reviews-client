@@ -1,0 +1,10 @@
+.product {
+    border: 1px solid black;
+}
+
+.review {
+    background-color: #f5f5f5;
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1px;
+}
