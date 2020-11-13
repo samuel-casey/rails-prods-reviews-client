@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Product.css';
 
-export default function Product({ product }) {
+export default function Product({
+	product,
+	selectReview,
+	setFormType,
+	selectProduct,
+}) {
 	const [reviews, setReviews] = useState([]);
 
 	const handleClick = async (e) => {
@@ -11,14 +16,23 @@ export default function Product({ product }) {
 		);
 
 		const reviewsArray = reviewData.data.reviews;
-		console.log(reviewsArray);
 		setReviews(reviewsArray);
 	};
 
+	const handleEditClick = async (e) => {
+		e.preventDefault();
+		selectReview(e.target.name);
+		console.log(e.target);
+		console.log(e.target.prod);
+		selectProduct(e.target.prod);
+		console.log(e.target.name);
+		setFormType('Edit a review');
+	};
+
 	const reviewList = reviews
-		? reviews.map((review) => {
+		? reviews.map((review, index) => {
 				return (
-					<div id={`${product.name}-review-${review.id}`} className='review'>
+					<div key={index} className='review'>
 						<p>
 							<b>Review:</b> {review.title}
 						</p>
@@ -28,6 +42,12 @@ export default function Product({ product }) {
 						<p>
 							<em>{review.content}</em>
 						</p>
+						<button
+							name={review.id}
+							prod={product.name}
+							onClick={handleEditClick}>
+							Edit
+						</button>
 					</div>
 				);
 		  })
