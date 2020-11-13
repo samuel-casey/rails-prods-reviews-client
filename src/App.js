@@ -6,6 +6,7 @@ import './App.css';
 
 function App() {
 	const [products, setProducts] = useState([]);
+	const [formType, setFormType] = useState('Add a review');
 
 	useEffect(async () => {
 		const fetchProducts = async () => {
@@ -27,7 +28,7 @@ function App() {
 	return (
 		<div className='App'>
 			<h1>Products</h1>
-			<Form />
+			<Form products={products} type={formType} />
 			{allProducts}
 		</div>
 	);
