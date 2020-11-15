@@ -5,7 +5,6 @@ import './Product.css';
 export default function Product({
 	product,
 	selectReview,
-	setFormType,
 	selectProduct,
 	history,
 }) {
@@ -28,7 +27,12 @@ export default function Product({
 
 		console.log(`clicked review #${reviewId} on product #${productId}`);
 
-		selectReview(reviewId);
+		const reviewContent = reviews.filter(
+			(review) => review.id === parseInt(reviewId)
+		);
+
+		console.log(productId);
+		selectReview(reviewContent);
 		selectProduct(productId);
 		history.push('/edit');
 	};

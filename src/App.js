@@ -29,8 +29,8 @@ function App() {
 		await setProducts(productsArray);
 	};
 
-	const handleSubmit = async (data) => {
-		console.log('form submit', data, selectedProduct.id);
+	const handleAddSubmit = async (data) => {
+		console.log('add submit', data, selectedProduct.id);
 
 		const review = await axios.post(
 			`http://localhost:3000/products/${selectedProduct.id}/reviews`,
@@ -38,7 +38,19 @@ function App() {
 		);
 	};
 
-	const selectReview = (review) => {
+	const handleEditSubmit = async (data) => {
+		console.log('edit submit', data, selectedReview.id);
+
+		// const review = await axios.put(
+		// 	`http://localhost:3000/reviews/${selectedReview.id}`,
+		// 	data
+		// );
+	};
+
+	const selectReview = async (filteredReviews) => {
+		const review = filteredReviews[0];
+		console.log(`editing review ${review.id}`);
+		console.log(review.title);
 		setSelectedReview(review);
 	};
 
@@ -48,8 +60,6 @@ function App() {
 		);
 
 		const clickedProductData = clickedProduct.data;
-
-		console.log(clickedProductData.id);
 		setSelectedProduct(clickedProductData);
 	};
 
@@ -81,7 +91,7 @@ function App() {
 							products={products}
 							selectedReview={selectedReview}
 							selectedProduct={selectedProduct}
-							submitForm={handleSubmit}
+							addReview={handleAddSubmit}
 						/>
 					</>
 				)}
@@ -96,7 +106,7 @@ function App() {
 							products={products}
 							selectedReview={selectedReview}
 							selectedProduct={selectedProduct}
-							submitForm={handleSubmit}
+							editReview={handleEditSubmit}
 						/>
 					</>
 				)}

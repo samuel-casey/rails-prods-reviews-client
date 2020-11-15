@@ -2,27 +2,25 @@ import React, { useState } from 'react';
 import './Form.css';
 
 export default function Form({
-	products,
-	submitForm,
+	// products,
+	addReview,
+	editReview,
 	history,
 	selectedProduct,
+	selectedReview,
 }) {
 	// set form to be empty data
 	// add selectedProduct to form data
 	// change form when user types
 	// submit form when user presses submit
 
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState({
+		title: selectedReview.title,
+		author: selectedReview.author,
+		content: selectedReview.content,
+	});
 
-	// const options = products
-	// 	? products.map((product, index) => {
-	// 			return (
-	// 				<option product-id={product.id} key={index}>
-	// 					{product.name}
-	// 				</option>
-	// 			);
-	// 	  })
-	// 	: null;
+	console.log('selectedReview', selectedReview, formData);
 
 	const handleChange = (e) => {
 		const key = e.target.name;
@@ -36,7 +34,8 @@ export default function Form({
 		// this should send title, author, content to App
 		// App should already know the product-id and combine that for the request
 		console.log(formData);
-		submitForm(formData);
+		addReview(formData);
+		// editReview(formData);
 		// history.push('/');
 	};
 
