@@ -7,6 +7,7 @@ export default function Product({
 	selectReview,
 	setFormType,
 	selectProduct,
+	history,
 }) {
 	const [reviews, setReviews] = useState([]);
 
@@ -21,12 +22,21 @@ export default function Product({
 
 	const handleEditClick = async (e) => {
 		e.preventDefault();
-		selectReview(e.target.name);
-		console.log(e.target);
-		console.log(e.target.prod);
-		selectProduct(e.target.prod);
-		console.log(e.target.name);
-		setFormType('Edit a review');
+
+		const reviewId = e.target.getAttribute('review-id');
+		const productId = e.target.getAttribute('product-id');
+
+		console.log(`clicked review #${reviewId} on product #${productId}`);
+
+		selectReview(reviewId);
+		selectProduct(productId);
+		history.push('/edit');
+	};
+
+	const handleAddReviewClick = async (e) => {
+		const productId = e.target.getAttribute('product-id');
+		selectProduct(productId);
+		history.push('/create');
 	};
 
 	const reviewList = reviews
@@ -43,8 +53,8 @@ export default function Product({
 							<em>{review.content}</em>
 						</p>
 						<button
-							name={review.id}
-							prod={product.name}
+							review-id={review.id}
+							product-id={product.id}
 							onClick={handleEditClick}>
 							Edit
 						</button>
@@ -58,6 +68,9 @@ export default function Product({
 			<p id={product.id}>{product.name}</p>
 			<img id={product.id} src={product.img} alt={product.name} />
 			<p id={product.id}>{product.price}</p>
+			<button onClick={handleAddReviewClick} product-id={product.id}>
+				Add a review
+			</button>
 			{reviewList}
 		</div>
 	);

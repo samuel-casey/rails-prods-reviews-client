@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from './Components/Form/Form';
-import Product from './Components/Product/Product';
+import AllProducts from './Components/AllProducts/AllProducts';
+import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 
 function App() {
 	const [products, setProducts] = useState([]);
-	const [formType, setFormType] = useState('Add a review');
 
 	const emptyReview = {
 		title: '',
@@ -27,48 +27,80 @@ function App() {
 		const res = await axios.get('http://localhost:3000/products');
 		const productsArray = await res.data;
 		await setProducts(productsArray);
-		console.log(productsArray);
 	};
 
 	const handleSubmit = async (data) => {
-		console.log(data);
+		console.log('form submit', data, selectedProduct.id);
+
+		const review = await axios.post(
+			`http://localhost:3000/products/${selectedProduct.id}/reviews`,
+			data
+		);
 	};
 
 	const selectReview = (review) => {
 		setSelectedReview(review);
 	};
 
-	const selectProduct = (product) => {
-		setSelectedProduct(product);
+	const selectProduct = async (productId) => {
+		const clickedProduct = await axios.get(
+			`http://localhost:3000/products/${productId}`
+		);
+
+		const clickedProductData = clickedProduct.data;
+
+		console.log(clickedProductData.id);
+		setSelectedProduct(clickedProductData);
 	};
 
 	useEffect(() => {
 		fetchProducts();
 	}, []);
 
-	const allProducts =
-		products.length > 0
-			? products.map((product, index) => (
-					<Product
-						key={index}
-						product={product}
-						selectReview={selectReview}
-						selectProduct={selectProduct}
-						setFormType={setFormType}
-					/>
-			  ))
-			: null;
 	return (
 		<div className='App'>
 			<h1>Products</h1>
-			<Form
-				products={products}
-				type={formType}
-				selectedReview={selectedReview}
-				selectedProduct={selectedProduct}
-				submitForm={handleSubmit}
+			<Route
+				path='/'
+				render={(rp) => (
+					<AllProducts
+						{...rp}
+						products={products}
+						selectReview={selectReview}
+						selectProduct={selectProduct}
+					/>
+				)}
 			/>
-			{allProducts}
+			<Route
+				path='/create'
+				render={(rp) => (
+					<>
+						<h3>Add a review</h3>
+						<Form
+							{...rp}
+							products={products}
+							selectedReview={selectedReview}
+							selectedProduct={selectedProduct}
+							submitForm={handleSubmit}
+						/>
+					</>
+				)}
+			/>
+			<Route
+				path='/edit'
+				render={(rp) => (
+					<>
+						<h3>Edit a review</h3>
+						<Form
+							{...rp}
+							products={products}
+							selectedReview={selectedReview}
+							selectedProduct={selectedProduct}
+							submitForm={handleSubmit}
+						/>
+					</>
+				)}
+			/>
 		</div>
 	);
 }
