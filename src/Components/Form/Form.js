@@ -14,13 +14,15 @@ export default function Form({
 	// change form when user types
 	// submit form when user presses submit
 
+	console.log('selectedReview', selectedReview);
+
 	const [formData, setFormData] = useState({
 		title: selectedReview.title,
 		author: selectedReview.author,
 		content: selectedReview.content,
 	});
 
-	console.log('selectedReview', selectedReview, formData);
+	console.log('selectedReview', selectedReview, 'formData', formData);
 
 	const handleChange = (e) => {
 		const key = e.target.name;
@@ -33,36 +35,55 @@ export default function Form({
 		e.preventDefault();
 		// this should send title, author, content to App
 		// App should already know the product-id and combine that for the request
-		console.log(formData);
-		addReview(formData);
-		// editReview(formData);
-		// history.push('/');
+		if (addReview) {
+			addReview(formData);
+		} else if (editReview) {
+			editReview(formData);
+		}
+
+		history.push('/');
 	};
 
 	const productSelected =
 		selectedProduct.name !== '' ? (
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='title-field'>Review for {selectedProduct.name}</label>
-				<input
-					type='text'
-					name='title'
-					value={formData.title}
-					onChange={handleChange}></input>
-				<label htmlFor='author-field'>Author name</label>
-				<input
-					type='text'
-					name='author'
-					value={formData.author}
-					onChange={handleChange}></input>
-				<label htmlFor='review-field'>Review</label>
-				<textarea
-					type='text'
-					name='content'
-					value={formData.content}
-					onChange={handleChange}
-				/>
-				<input type='submit' />
-			</form>
+			<>
+				<div>
+					<p>Review for: {selectedProduct.name}</p>
+					<p>
+						{selectedReview.title !== '' ? (
+							<>
+								<p>
+									Editing review {selectedReview.title} by{' '}
+									{selectedReview.author}
+								</p>
+								<p>current review: {selectedReview.content}</p>
+							</>
+						) : null}
+					</p>
+				</div>
+				<form onSubmit={handleSubmit}>
+					<label htmlFor='title-field'>Review Title</label>
+					<input
+						type='text'
+						name='title'
+						value={formData.title}
+						onChange={handleChange}></input>
+					<label htmlFor='author-field'>Author name</label>
+					<input
+						type='text'
+						name='author'
+						value={formData.author}
+						onChange={handleChange}></input>
+					<label htmlFor='review-field'>Review</label>
+					<textarea
+						type='text'
+						name='content'
+						value={formData.content}
+						onChange={handleChange}
+					/>
+					<input type='submit' />
+				</form>
+			</>
 		) : (
 			'Select a product to write a review'
 		);

@@ -31,7 +31,6 @@ export default function Product({
 			(review) => review.id === parseInt(reviewId)
 		);
 
-		console.log(productId);
 		selectReview(reviewContent);
 		selectProduct(productId);
 		history.push('/edit');

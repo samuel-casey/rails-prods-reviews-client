@@ -20,6 +20,9 @@ function App() {
 		img: '',
 	};
 
+	// const [selectedReview, setSelectedReview] = useState(emptyReview);
+	// const [selectedProduct, setSelectedProduct] = useState(emptyProduct);
+
 	const [selectedReview, setSelectedReview] = useState(emptyReview);
 	const [selectedProduct, setSelectedProduct] = useState(emptyProduct);
 
@@ -41,10 +44,10 @@ function App() {
 	const handleEditSubmit = async (data) => {
 		console.log('edit submit', data, selectedReview.id);
 
-		// const review = await axios.put(
-		// 	`http://localhost:3000/reviews/${selectedReview.id}`,
-		// 	data
-		// );
+		const review = await axios.put(
+			`http://localhost:3000/reviews/${selectedReview.id}`,
+			data
+		);
 	};
 
 	const selectReview = async (filteredReviews) => {
@@ -89,7 +92,7 @@ function App() {
 						<Form
 							{...rp}
 							products={products}
-							selectedReview={selectedReview}
+							selectedReview={emptyReview}
 							selectedProduct={selectedProduct}
 							addReview={handleAddSubmit}
 						/>
