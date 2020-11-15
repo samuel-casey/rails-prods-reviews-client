@@ -49,7 +49,7 @@ export default function Form({
 			<>
 				<div>
 					<p>Review for: {selectedProduct.name}</p>
-					<p>
+					<div>
 						{selectedReview.title !== '' ? (
 							<>
 								<p>
@@ -59,7 +59,7 @@ export default function Form({
 								<p>current review: {selectedReview.content}</p>
 							</>
 						) : null}
-					</p>
+					</div>
 				</div>
 				<form onSubmit={handleSubmit}>
 					<label htmlFor='title-field'>Review Title</label>

@@ -33,8 +33,6 @@ function App() {
 	};
 
 	const handleAddSubmit = async (data) => {
-		console.log('add submit', data, selectedProduct.id);
-
 		const review = await axios.post(
 			`http://localhost:3000/products/${selectedProduct.id}/reviews`,
 			data
@@ -42,11 +40,16 @@ function App() {
 	};
 
 	const handleEditSubmit = async (data) => {
-		console.log('edit submit', data, selectedReview.id);
-
 		const review = await axios.put(
 			`http://localhost:3000/reviews/${selectedReview.id}`,
 			data
+		);
+	};
+
+	const handleDelete = async (reviewId) => {
+		console.log('delete', reviewId);
+		const destroyed = await axios.delete(
+			`http://localhost:3000/reviews/${reviewId}`
 		);
 	};
 
@@ -81,6 +84,7 @@ function App() {
 						products={products}
 						selectReview={selectReview}
 						selectProduct={selectProduct}
+						handleDelete={handleDelete}
 					/>
 				)}
 			/>

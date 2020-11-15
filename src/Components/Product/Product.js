@@ -7,6 +7,7 @@ export default function Product({
 	selectReview,
 	selectProduct,
 	history,
+	handleDelete,
 }) {
 	const [reviews, setReviews] = useState([]);
 
@@ -36,6 +37,24 @@ export default function Product({
 		history.push('/edit');
 	};
 
+	const handleDeleteClick = async (e) => {
+		e.preventDefault();
+
+		const reviewId = e.target.getAttribute('review-id');
+		const productId = e.target.getAttribute('product-id');
+
+		console.log(`clicked review #${reviewId} on product #${productId}`);
+
+		const reviewContent = reviews.filter(
+			(review) => review.id === parseInt(reviewId)
+		);
+
+		// selectReview(reviewContent);
+		// selectProduct(productId);
+		handleDelete(reviewId);
+		history.push('/');
+	};
+
 	const handleAddReviewClick = async (e) => {
 		const productId = e.target.getAttribute('product-id');
 		selectProduct(productId);
@@ -60,6 +79,12 @@ export default function Product({
 							product-id={product.id}
 							onClick={handleEditClick}>
 							Edit
+						</button>
+						<button
+							review-id={review.id}
+							product-id={product.id}
+							onClick={handleDeleteClick}>
+							Delete
 						</button>
 					</div>
 				);

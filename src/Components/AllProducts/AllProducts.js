@@ -6,6 +6,7 @@ export default function AllProducts({
 	selectReview,
 	selectProduct,
 	history,
+	handleDelete,
 }) {
 	const allProducts =
 		products.length > 0
@@ -16,6 +17,7 @@ export default function AllProducts({
 						product={product}
 						selectReview={selectReview}
 						selectProduct={selectProduct}
+						handleDelete={handleDelete}
 					/>
 			  ))
 			: null;
