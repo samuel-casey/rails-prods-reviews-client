@@ -26,8 +26,6 @@ export default function Product({
 		const reviewId = e.target.getAttribute('review-id');
 		const productId = e.target.getAttribute('product-id');
 
-		console.log(`clicked review #${reviewId} on product #${productId}`);
-
 		const reviewContent = reviews.filter(
 			(review) => review.id === parseInt(reviewId)
 		);
@@ -42,8 +40,6 @@ export default function Product({
 
 		const reviewId = e.target.getAttribute('review-id');
 		const productId = e.target.getAttribute('product-id');
-
-		console.log(`clicked review #${reviewId} on product #${productId}`);
 
 		const reviewContent = reviews.filter(
 			(review) => review.id === parseInt(reviewId)

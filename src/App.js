@@ -47,7 +47,6 @@ function App() {
 	};
 
 	const handleDelete = async (reviewId) => {
-		console.log('delete', reviewId);
 		const destroyed = await axios.delete(
 			`http://localhost:3000/reviews/${reviewId}`
 		);
@@ -55,8 +54,6 @@ function App() {
 
 	const selectReview = async (filteredReviews) => {
 		const review = filteredReviews[0];
-		console.log(`editing review ${review.id}`);
-		console.log(review.title);
 		setSelectedReview(review);
 	};
 
@@ -76,18 +73,6 @@ function App() {
 	return (
 		<div className='App'>
 			<h1>Products</h1>
-			<Route
-				path='/'
-				render={(rp) => (
-					<AllProducts
-						{...rp}
-						products={products}
-						selectReview={selectReview}
-						selectProduct={selectProduct}
-						handleDelete={handleDelete}
-					/>
-				)}
-			/>
 			<Route
 				path='/create'
 				render={(rp) => (
@@ -116,6 +101,18 @@ function App() {
 							editReview={handleEditSubmit}
 						/>
 					</>
+				)}
+			/>
+			<Route
+				path='/'
+				render={(rp) => (
+					<AllProducts
+						{...rp}
+						products={products}
+						selectReview={selectReview}
+						selectProduct={selectProduct}
+						handleDelete={handleDelete}
+					/>
 				)}
 			/>
 		</div>

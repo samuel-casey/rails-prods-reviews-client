@@ -9,20 +9,11 @@ export default function Form({
 	selectedProduct,
 	selectedReview,
 }) {
-	// set form to be empty data
-	// add selectedProduct to form data
-	// change form when user types
-	// submit form when user presses submit
-
-	console.log('selectedReview', selectedReview);
-
 	const [formData, setFormData] = useState({
 		title: selectedReview.title,
 		author: selectedReview.author,
 		content: selectedReview.content,
 	});
-
-	console.log('selectedReview', selectedReview, 'formData', formData);
 
 	const handleChange = (e) => {
 		const key = e.target.name;
